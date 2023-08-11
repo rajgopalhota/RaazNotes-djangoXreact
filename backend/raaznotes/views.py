@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the raaznotes index.")
+    return JsonResponse({1:"raja"})
