@@ -1,0 +1,19 @@
+/* dark-mode.css */
+body.dark-mode {
+  background-color: #333333;
+  color: white;
+}
+/* Apply dark background color to the navbar */
+body.dark-mode .custom-navbar {
+  background-color: #333333;
+}
+
+/* Apply light text color to the navbar links in dark mode */
+body.dark-mode .navbar-light .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+/* Apply light text color to the toggle button icon in dark mode */
+body.dark-mode .navbar-light .navbar-toggler-icon {
+  background-color: #ffffff;
+}
