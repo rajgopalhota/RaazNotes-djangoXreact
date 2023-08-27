@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {BackendUrl} from './../Helper'
+import axios from "axios";
+
 
 function NoteDetail() {
   const { id } = useParams();
   const [note, setNote] = useState(null);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/notes/${id}/`) // Replace with your backend URL
-      .then((response) => response.json())
-      .then((data) => setNote(data))
-      .catch((error) => console.error("Error fetching note:", error));
+    const fetchNote = async () => {
+      try {
+        const response = await axios.get(
+          `${BackendUrl}/api/notes/${id}/`
+        ); // Replace with your backend URL
+        setNote(response.data);
+      } catch (error) {
+        console.error("Error fetching note:", error);
+      }
+    };
+
+    fetchNote();
   }, [id]);
 
   if (!note) {

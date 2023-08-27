@@ -1,6 +1,8 @@
 // Home.js
 
 import React, { useState, useEffect } from "react";
+import { BackendUrl } from "./../Helper";
+import axios from "axios";
 
 function Home() {
   const [ideas, setIdeas] = useState("");
@@ -8,18 +10,13 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   const handleAddPost = async () => {
-    const newPost = {
-      ideas,
-      tags,
-    };
-
     try {
-      await fetch("http://127.0.0.1:8000/api/posts/create/", {
-        method: "POST",
+      await axios.post(`${BackendUrl}/api/posts/create/`, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newPost),
+        ideas: ideas,
+        tags: tags,
       });
 
       // Clear form inputs after successful submission
@@ -33,9 +30,8 @@ function Home() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/posts/");
-      const data = await response.json();
-      setPosts(data);
+      const res = await axios.get(`${BackendUrl}/api/posts/`);
+      setPosts(res.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }

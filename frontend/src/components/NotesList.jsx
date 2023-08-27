@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {BackendUrl} from './../Helper'
+import axios from "axios";
 
 function NotesList() {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/notes/") // Replace with your backend URL
-      .then((response) => response.json())
-      .then((data) => {
-        setNotes(data);
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get(`${BackendUrl}/api/notes/`); // Replace with your backend URL
+        setNotes(response.data);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching notes:", error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchNotes();
   }, []);
 
   if (loading) {

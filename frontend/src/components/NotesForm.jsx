@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { BackendUrl } from "./../Helper";
+import axios from "axios";
 
 function NotesForm() {
   const [title, setTitle] = useState("");
@@ -7,20 +9,17 @@ function NotesForm() {
   const [text, setText] = useState("");
 
   const handleSubmit = async () => {
-    const newNote = {
-      title,
-      cover_url: coverUrl,
-      tags,
-      text,
-    };
 
     try {
-      await fetch("http://127.0.0.1:8000/api/notes/create/", {
+      await axios.post(`${BackendUrl}/api/notes/create/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newNote),
+        title: title,
+        cover_url: coverUrl,
+        tags: tags,
+        text: text,
       });
 
       // Clear form inputs after successful submission
