@@ -27,15 +27,26 @@ function NotesList() {
   }
 
   return (
-    <div>
+    <div className="container mt-4">
       <h2>Notes List</h2>
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            <Link to={`/detailednote/${note.id}`}>{note.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map((note, index) => (
+            <tr key={note.id}>
+              <th scope="row">{index + 1}</th>
+              <td>
+                <Link to={`/detailednote/${note.id}`}>{note.title}</Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
