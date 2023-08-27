@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-function NoteDetail({ note }) {
+function NoteDetail() {
+  const { id } = useParams();
+  const [note, setNote] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/notes/${id}/`) // Replace with your backend URL
+      .then((response) => response.json())
+      .then((data) => setNote(data))
+      .catch((error) => console.error("Error fetching note:", error));
+  }, [id]);
+
+  if (!note) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="container">
-      <h2 className="mt-4">Note Detail</h2>
-      <p className="lead">{note}</p>
+    <div>
+      <h1>Welcome</h1>
+      <h2>{note.title}</h2>
+      <p>{note.content}</p>
+      <p>Posted At: {note.created_at}</p>
     </div>
   );
 }

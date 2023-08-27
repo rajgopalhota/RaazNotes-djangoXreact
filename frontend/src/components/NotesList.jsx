@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function NotesList({ notes }) {
+function NotesList() {
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/notes/") // Replace with your backend URL
+      .then((response) => response.json())
+      .then((data) => {
+        setNotes(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching notes:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="container">
-      <h2 className="mt-4">All Notes</h2>
-      <ul className="list-group">
-        {notes.map((note, index) => (
-          <li key={index} className="list-group-item">
-            {note}
+    <div>
+      <h2>Notes List</h2>
+      <ul>
+        {notes.map((note) => (
+          <li key={note.id}>
+            <Link to={`/detailednote/${note.id}`}>{note.title}</Link>
           </li>
         ))}
       </ul>

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import Post, Notes
 from .serializers import PostSerializer, NotesSerializer
 
@@ -26,6 +26,10 @@ class PostListView(ListAPIView):
     serializer_class = PostSerializer
 
 class NotesListView(ListAPIView):
+    queryset = Notes.objects.all()
+    serializer_class = NotesSerializer
+
+class NotesDetailView(RetrieveAPIView):
     queryset = Notes.objects.all()
     serializer_class = NotesSerializer
 

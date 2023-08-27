@@ -54,11 +54,6 @@ function Navbar() {
                 My Notes
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/detailednote">
-                Detailed View
-              </NavLink>
-            </li>
           </ul>
         </div>
         <div className="form-check form-switch">
